@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataProviders", "DataProvid
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversiteDomain", "UniversiteDomain\UniversiteDomain.csproj", "{4352E0A7-D852-4B57-B4E2-CFC4F96CD2E1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversiteDomainUnitTests", "UniversiteDomainUnitTests\UniversiteDomainUnitTests.csproj", "{A3F45042-D7E5-46C0-881A-F43507BA959B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,11 +19,16 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4352E0A7-D852-4B57-B4E2-CFC4F96CD2E1} = {83434DF5-9FBC-46D4-A2C2-55CE6AD5EE12}
+		{A3F45042-D7E5-46C0-881A-F43507BA959B} = {F66C08A3-DD71-4C51-8603-C142FB8B28EC}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{4352E0A7-D852-4B57-B4E2-CFC4F96CD2E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4352E0A7-D852-4B57-B4E2-CFC4F96CD2E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4352E0A7-D852-4B57-B4E2-CFC4F96CD2E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4352E0A7-D852-4B57-B4E2-CFC4F96CD2E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3F45042-D7E5-46C0-881A-F43507BA959B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3F45042-D7E5-46C0-881A-F43507BA959B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3F45042-D7E5-46C0-881A-F43507BA959B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3F45042-D7E5-46C0-881A-F43507BA959B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
