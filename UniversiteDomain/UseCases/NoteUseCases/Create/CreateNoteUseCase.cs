@@ -14,12 +14,12 @@ public class CreateNoteUseCase(INoteRepository noteRepository)
         return noteCree;
     }
     
-    public async Task<Note> ExecuteAsync(Etudiant etudiant, Ue ue, double valeur)
+    public async Task<Note> ExecuteAsync(long etudiantId, long ueId, double valeur)
     {
-        ArgumentNullException.ThrowIfNull(etudiant);
-        ArgumentNullException.ThrowIfNull(ue);
+        ArgumentNullException.ThrowIfNull(etudiantId);
+        ArgumentNullException.ThrowIfNull(ueId);
         ArgumentNullException.ThrowIfNull(valeur);
-        Note note = new Note { Etudiant = etudiant, Ue = ue, Valeur = valeur };
+        Note note = new Note { EtudiantId = etudiantId, UeId = ueId, Valeur = valeur };
         return await ExecuteAsync(note);
     }
 

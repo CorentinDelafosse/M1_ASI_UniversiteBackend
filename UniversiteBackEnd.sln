@@ -12,6 +12,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversiteDomain", "Univers
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversiteDomainUnitTests", "UniversiteDomainUnitTests\UniversiteDomainUnitTests.csproj", "{A3F45042-D7E5-46C0-881A-F43507BA959B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversiteEFDataProvider", "UniversiteEFDataProvider\UniversiteEFDataProvider.csproj", "{B8062317-1060-4783-9898-C0AD59F15C7C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversiteRestApi", "UniversiteRestApi\UniversiteRestApi.csproj", "{175AC936-4E16-473A-9E97-35ACA7CFADA1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +24,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{4352E0A7-D852-4B57-B4E2-CFC4F96CD2E1} = {83434DF5-9FBC-46D4-A2C2-55CE6AD5EE12}
 		{A3F45042-D7E5-46C0-881A-F43507BA959B} = {F66C08A3-DD71-4C51-8603-C142FB8B28EC}
+		{B8062317-1060-4783-9898-C0AD59F15C7C} = {4D79C772-92F0-452E-9626-7B04C1F4D0A2}
+		{175AC936-4E16-473A-9E97-35ACA7CFADA1} = {5B34FA70-FF80-4C22-9E0C-C861E546842B}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{4352E0A7-D852-4B57-B4E2-CFC4F96CD2E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -30,5 +36,13 @@ Global
 		{A3F45042-D7E5-46C0-881A-F43507BA959B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3F45042-D7E5-46C0-881A-F43507BA959B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3F45042-D7E5-46C0-881A-F43507BA959B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8062317-1060-4783-9898-C0AD59F15C7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8062317-1060-4783-9898-C0AD59F15C7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8062317-1060-4783-9898-C0AD59F15C7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8062317-1060-4783-9898-C0AD59F15C7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{175AC936-4E16-473A-9E97-35ACA7CFADA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{175AC936-4E16-473A-9E97-35ACA7CFADA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{175AC936-4E16-473A-9E97-35ACA7CFADA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{175AC936-4E16-473A-9E97-35ACA7CFADA1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
