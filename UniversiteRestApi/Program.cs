@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using UniversiteDomain.DataAdapters;
 using UniversiteDomain.DataAdapters.DataAdaptersFactory;
 using UniversiteEFDataProvider.Data;
 using UniversiteEFDataProvider.RepositoryFactories;
