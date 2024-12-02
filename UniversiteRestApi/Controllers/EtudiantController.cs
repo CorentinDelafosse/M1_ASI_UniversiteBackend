@@ -27,15 +27,60 @@ namespace UniversiteRestApi.Controllers
 
         // POST api/<EtudiantController>
         [HttpPost]
-        public async Task<EtudiantDto> PostAsync([FromBody] EtudiantDto etudiantDto)
+        public async Task<ActionResult<EtudiantDto>> PostAsync([FromBody] EtudiantDto etudiantDto)
         {
-            // Converstion d'un EtudiantDto sans Id en Etudiant
-            Etudiant etudiant = etudiantDto.ToEntity();
-            // Création d'un étudiant
-            CreateEtudiantUseCase uc=new CreateEtudiantUseCase(repositoryFactory.EtudiantRepository());
-            etudiant = await uc.ExecuteAsync(etudiant);
-            // Conversion de l'étudiant avec son nouvel Id en EtudiantDto
-            return new EtudiantDto().ToDto(etudiant);
+            CreateEtudiantUseCase createEtudiantUc = new CreateEtudiantUseCase(repositoryFactory.EtudiantRepository());           
+            Etudiant etud = etudiantDto.ToEntity();
+            try
+            {
+                etud = await createEtudiantUc.ExecuteAsync(etud);
+            }
+            catch (Exception e)
+            {
+                // On récupère ici les exceptions personnalisées définies dans la couche domain
+                // Et on les envoie avec le code d'erreur 400 et l'intitulé "erreurs de validation"
+                ModelState.AddModelError(nameof(e), e.Message);
+                return ValidationProblem();
+            }
+            EtudiantDto dto = new EtudiantDto().ToDto(etud);
+            // On revoie la route vers le get qu'on n'a pas encore écrit!
+            return CreatedAtAction(nameof(GetUnEtudiant), new { id = dto.Id }, dto);
+        }
+        
+// Définissons une nouvelle route pour ne pas créer de conflit avec le get de base
+// GET api/<EtudiantController>/complet/5
+        [HttpGet("complet/{id}")]
+        public async Task<ActionResult<EtudiantCompletDto>> GetUnEtudiantCompletAsync(long id)
+        {
+            // Identification et authentification
+            string role="";
+            string email="";
+            IUniversiteUser user = null;
+            try
+            {
+                CheckSecu(out role, out email, out user);
+            }
+            catch (Exception e)
+            {
+                return Unauthorized();
+            }
+    
+            GetEtudiantCompletUseCase uc = new GetEtudiantCompletUseCase(repositoryFactory);
+            // Autorisation
+            // On vérifie si l'utilisateur connecté a le droit d'accéder à la ressource
+            if (!uc.IsAuthorized(role, user, id)) return Unauthorized();
+            Etudiant? etud;
+            try
+            {
+                etud = await uc.ExecuteAsync(id);
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError(nameof(e), e.Message);
+                return ValidationProblem();
+            }
+            if (etud == null) return NotFound();
+            return new EtudiantCompletDto().ToDto(etud);
         }
 
         // PUT api/<EtudiantController>/5

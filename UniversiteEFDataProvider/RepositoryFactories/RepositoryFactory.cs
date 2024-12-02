@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Identity;
 using UniversiteDomain.DataAdapters;
 using UniversiteDomain.DataAdapters.DataAdaptersFactory;
 using UniversiteEFDataProvider.Data;
+using UniversiteEFDataProvider.Entities;
 using UniversiteEFDataProvider.Repositories;
 
 namespace UniversiteEFDataProvider.RepositoryFactories;
@@ -11,6 +13,8 @@ public class RepositoryFactory (UniversiteDbContext context): IRepositoryFactory
     private IEtudiantRepository? _etudiants;
     private IUeRepository? _ues;
     private INoteRepository? _notes;
+    private IUniversiteRoleRepository? _roles;
+    private IUniversiteUserRepository? _users;
     
     public IParcoursRepository ParcoursRepository()
     {
@@ -47,6 +51,24 @@ public class RepositoryFactory (UniversiteDbContext context): IRepositoryFactory
         }
         return _notes;
 
+    }
+
+    public IUniversiteRoleRepository UniversiteRoleRepository()
+    {
+        if (_roles == null)
+        {
+            _roles = new UniversiteRoleRepository(context ?? throw new InvalidOperationException(), new RoleManager<UniversiteRole>(null, null, null, null, null));
+        }
+        return _roles;
+    }
+    
+    public IUniversiteUserRepository UniversiteUserRepository()
+    {
+        if (_users == null)
+        {
+            _users = new UniversiteUserRepository(context ?? throw new InvalidOperationException(), new UserManager<UniversiteUser>(null, null, null, null, null, null, null, null, null), new RoleManager<UniversiteRole>(null, null, null, null, null));
+        }
+        return _users;
     }
        
     public async Task SaveChangesAsync()
