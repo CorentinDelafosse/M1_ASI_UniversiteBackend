@@ -116,7 +116,7 @@ public class BasicBdBuilder(IRepositoryFactory repositoryFactory) : BdBuilder(re
     {
         foreach (Etudiant e in _etudiants)
         {
-            await new CreateEtudiantUseCase(repositoryFactory.EtudiantRepository()).ExecuteAsync(e);
+            await new CreateEtudiantUseCase(repositoryFactory).ExecuteAsync(e);
         }
     }
     protected override async Task BuildParcoursAsync()
