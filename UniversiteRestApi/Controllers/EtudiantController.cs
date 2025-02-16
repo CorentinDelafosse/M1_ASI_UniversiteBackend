@@ -75,6 +75,42 @@ namespace UniversiteRestApi.Controllers
             return CreatedAtAction(nameof(GetUnEtudiant), new { id = dto.Id }, dto);
         }
         
+        // Définissons une nouvelle route pour ne pas créer de conflit avec le get de base
+// GET api/<EtudiantController>/complet/5
+        [HttpGet("complet/{id}")]
+        public async Task<ActionResult<EtudiantCompletDto>> GetUnEtudiantCompletAsync(long id)
+        {
+            // Identification et authentification
+            string role="";
+            string email="";
+            IUniversiteUser user = null;
+            try
+            {
+                CheckSecu(out role, out email, out user);
+            }
+            catch (Exception e)
+            {
+                return Unauthorized();
+            }
+    
+            GetEtudiantCompletUseCase uc = new GetEtudiantCompletUseCase(repositoryFactory);
+            // Autorisation
+            // On vérifie si l'utilisateur connecté a le droit d'accéder à la ressource
+            if (!uc.IsAuthorized(role, user, id)) return Unauthorized();
+            Etudiant? etud;
+            try
+            {
+                etud = await uc.ExecuteAsync(id);
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError(nameof(e), e.Message);
+                return ValidationProblem();
+            }
+            if (etud == null) return NotFound();
+            return new EtudiantCompletDto().ToDto(etud);
+        }
+        
 // Définissons une nouvelle route pour ne pas créer de conflit avec le get de base
 // GET api/<EtudiantController>/complet/5
        
