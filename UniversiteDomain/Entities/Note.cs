@@ -6,9 +6,9 @@ public class Note
     public long EtudiantId { get; set; } = 0;
     public long UeId { get; set; } = 0;
     //OneToMany vers Etudiant
-    public Etudiant Etudiant { get; set; } = null!;
+    public virtual Etudiant Etudiant { get; set; } = new();
     //ManyToOne vers UE
-    public Ue Ue { get; set; } = null!;
+    public virtual Ue Ue { get; set; } = new();
     public double Valeur { get; set; } = 0.0;
     public override string ToString()
     {

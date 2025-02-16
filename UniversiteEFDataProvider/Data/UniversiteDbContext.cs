@@ -95,6 +95,7 @@ public class UniversiteDbContext : IdentityDbContext<UniversiteUser>
         // Permet d'inclure automatiquement l'étudiant dans le user sans avoir besoin de préciser la jointure
         modelBuilder.Entity<UniversiteUser>().Navigation<Etudiant>(user => user.Etudiant).AutoInclude();
         modelBuilder.Entity<UniversiteRole>();
+        modelBuilder.Entity<Parcours>().Navigation(p => p.Inscrits).AutoInclude();
     }
     
     public DbSet <Parcours>? Parcours { get; set; }
