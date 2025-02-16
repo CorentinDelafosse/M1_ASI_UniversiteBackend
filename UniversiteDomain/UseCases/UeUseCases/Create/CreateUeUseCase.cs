@@ -33,5 +33,9 @@ public class CreateUeUseCase(IRepositoryFactory repositoryFactory)
         if (ues is { Count: > 0 }) throw new DuplicateUeDansParcoursException(ue.NumeroUe+" - existe déjà");
         
     }
-    
+
+    public bool IsAuthorized(string role)
+    {
+        return role.Equals(Roles.Scolarite) || role.Equals(Roles.Responsable);
+    }
 }

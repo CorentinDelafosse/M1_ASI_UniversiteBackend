@@ -10,6 +10,7 @@ namespace UniversiteDomain.DataAdapters
         Task DeleteAsync(long id);
         Task DeleteAsync(T entity);
         Task<T?> FindAsync(long id);
+        void Attach(T entity);
         Task<T?> FindAsync(params object[] keyValues);
         Task<List<T>> FindByConditionAsync(Expression<Func<T, bool>> condition);
         Task<List<T>> FindAllAsync();

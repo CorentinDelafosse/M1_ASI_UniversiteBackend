@@ -25,5 +25,9 @@ public class CreateParcoursUseCase(IParcoursRepository parcoursRepository)
         ArgumentNullException.ThrowIfNull(parcours.NomParcours);
         ArgumentNullException.ThrowIfNull(parcoursRepository); 
     }
-   
+    
+    public bool IsAuthorized(string role)
+    {
+        return role.Equals(Roles.Scolarite) || role.Equals(Roles.Responsable);
+    }
 }

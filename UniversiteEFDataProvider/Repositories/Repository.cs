@@ -69,6 +69,11 @@ public abstract class Repository<T>(UniversiteDbContext context) : IRepository<T
     {
         return await Context.Set<T>().ToListAsync();
     }
+    
+    public void Attach(T entity)
+    {
+        Context.Set<T>().Attach(entity);
+    }
 
     public Task SaveChangesAsync()
     {

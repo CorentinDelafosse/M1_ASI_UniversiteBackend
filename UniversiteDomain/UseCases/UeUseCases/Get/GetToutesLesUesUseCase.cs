@@ -20,5 +20,9 @@ public class GetToutesLesUesUseCase(IRepositoryFactory repositoryFactory)
         IUeRepository ueRepository=repositoryFactory.UeRepository();
         ArgumentNullException.ThrowIfNull(ueRepository);
     }
-    
+
+    public bool IsAuthorized(string role)
+    {
+        return role.Equals(Roles.Scolarite) || role.Equals(Roles.Responsable);
+    }
 }

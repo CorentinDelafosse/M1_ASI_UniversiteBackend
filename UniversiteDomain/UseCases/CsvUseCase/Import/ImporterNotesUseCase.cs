@@ -1,3 +1,4 @@
+using UniversiteDomain.DataAdapters;
 using UniversiteDomain.DataAdapters.DataAdaptersFactory;
 using UniversiteDomain.Dtos;
 using UniversiteDomain.Entities;
@@ -9,6 +10,7 @@ public class ImporterNotesDepuisCsvUseCase(IRepositoryFactory repositoryFactory)
 
     public async Task ExecuteAsync(long idUe, string csvContent)
     {
+        await CheckBusinessRules();
         Ue? ue = await repositoryFactory.UeRepository().FindAsync(idUe);
         if (ue == null)
         {
@@ -74,5 +76,22 @@ public class ImporterNotesDepuisCsvUseCase(IRepositoryFactory repositoryFactory)
         }
 
         await repositoryFactory.NoteRepository().SaveChangesAsync();
+    }
+    
+    
+    private async Task CheckBusinessRules()
+    {
+        ArgumentNullException.ThrowIfNull(repositoryFactory);
+        INoteRepository noteRepository = repositoryFactory.NoteRepository();
+        ArgumentNullException.ThrowIfNull(noteRepository);
+        IEtudiantRepository etudiantRepository = repositoryFactory.EtudiantRepository();
+        ArgumentNullException.ThrowIfNull(etudiantRepository);
+        IUeRepository ueRepository = repositoryFactory.UeRepository();
+        ArgumentNullException.ThrowIfNull(ueRepository);
+    }
+    
+    public bool IsAuthorized(string role)
+    {
+        return role.Equals(Roles.Scolarite);
     }
 }
