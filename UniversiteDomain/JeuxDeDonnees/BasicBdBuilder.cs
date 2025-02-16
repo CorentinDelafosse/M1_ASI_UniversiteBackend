@@ -5,7 +5,6 @@ using UniversiteDomain.UseCases.NoteUseCases.Create;
 using UniversiteDomain.UseCases.ParcoursUseCases.Create;
 using UniversiteDomain.UseCases.ParcoursUseCases.EtudiantDansParcours;
 using UniversiteDomain.UseCases.ParcoursUseCases.UeDansParcours;
-using UniversiteDomain.UseCases.SecurityUseCases;
 using UniversiteDomain.UseCases.SecurityUseCases.Create;
 using UniversiteDomain.UseCases.UeUseCases.Create;
 
@@ -131,7 +130,7 @@ public class BasicBdBuilder(IRepositoryFactory repositoryFactory) : BdBuilder(re
     {
         foreach (Ue ue in _ues)
         {
-            await new CreateUeUseCase(repositoryFactory.UeRepository()).ExecuteAsync(ue);
+            await new CreateUeUseCase(repositoryFactory).ExecuteAsync(ue);
         }
     }
 
@@ -154,7 +153,7 @@ public class BasicBdBuilder(IRepositoryFactory repositoryFactory) : BdBuilder(re
     {
         foreach( var note in _notes)
         {
-            await new CreateNoteUseCase(repositoryFactory.NoteRepository()).ExecuteAsync(note.EtudiantId,note.UeId, note.Valeur);
+            await new CreateNoteUseCase(repositoryFactory).ExecuteAsync(note.Valeur, note.EtudiantId,note.UeId);
         }
     }
     

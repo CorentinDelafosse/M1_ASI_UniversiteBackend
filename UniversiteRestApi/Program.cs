@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using UniversiteDomain.DataAdapters.DataAdaptersFactory;
 using UniversiteDomain.JeuxDeDonnees;
 using UniversiteEFDataProvider.Data;
+using UniversiteEFDataProvider.Entities;
 using UniversiteEFDataProvider.RepositoryFactories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +26,19 @@ String connectionString = builder.Configuration.GetConnectionString("MySqlConnec
 builder.Services.AddDbContext<UniversiteDbContext>(options =>options.UseMySQL(connectionString));
 // La factory est rajoutée dans les services de l'application, toujours prête à être utilisée par injection de dépendances
 builder.Services.AddScoped<IRepositoryFactory, RepositoryFactory>();
+builder.Services.AddScoped<RoleManager<UniversiteRole>>();
+builder.Services.AddScoped<UserManager<UniversiteUser>>();
+
+// Sécurisation
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
+    .AddCookie(IdentityConstants.ApplicationScheme)
+    .AddBearerToken(IdentityConstants.BearerScheme);
+
+builder.Services.AddIdentityCore<UniversiteUser>()
+    .AddRoles<UniversiteRole>()
+    .AddEntityFrameworkStores<UniversiteDbContext>() // Ici, on stocke les users dans la même bd que le reste
+    .AddApiEndpoints();
 
 // Création de tous les services qui sont stockés dans app
 // app contient tous les aobjets de notre application
@@ -38,9 +53,31 @@ app.MapControllers();
 app.UseSwagger();
 app.UseSwaggerUI();
 
+// Sécurisation
+app.UseAuthorization();
+// Ajoute les points d'entrée dans l'API pour s'authentifier, se connecter et se déconnecter
+app.MapIdentityApi<UniversiteUser>();
+
 // Initisation de la base de données
-ILogger logger = app.Services.GetRequiredService<ILogger<BdBuilder>>();
-logger.LogInformation("Chargement des données de test");
+// A commenter si vous ne voulez pas vider la base à chaque Run!
+using(var scope = app.Services.CreateScope())
+{
+    // On récupère le logger pour afficher des messages. On l'a mis dans les services de l'application
+    var logger = scope.ServiceProvider.GetRequiredService<ILogger<UniversiteDbContext>>();
+    // On récupère le contexte de la base de données qui est stocké sans les services
+    DbContext context = scope.ServiceProvider.GetRequiredService<UniversiteDbContext>();
+    logger.LogInformation("Initialisation de la base de données");
+    // Suppression de la BD
+    logger.LogInformation("Suppression de la BD si elle existe");
+    await context.Database.EnsureDeletedAsync();
+    // Recréation des tables vides
+    logger.LogInformation("Création de la BD et des tables à partir des entities");
+    await context.Database.EnsureCreatedAsync();
+}
+
+// Initisation de la base de données
+ILogger _logger = app.Services.GetRequiredService<ILogger<BdBuilder>>();
+_logger.LogInformation("Chargement des données de test");
 using(var scope = app.Services.CreateScope())
 {
     UniversiteDbContext context = scope.ServiceProvider.GetRequiredService<UniversiteDbContext>();
